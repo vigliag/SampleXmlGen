@@ -1,0 +1,57 @@
+DataPool concept:
+children of a node can be generate univocally for the parent (using its name as prefix for all the generated data), or querying a common pool (a DataPool belonging to one of their ancestor).
+each node can define its own datapool requesting a subset of the datapool of one of its ancestors
+--
+Children nodes have subsets of the pool of their ancestors, these subset can be shared or distinct between sibilings.
+If nothing is specified, the pools of the parents are inherited
+All elements and attributes have some default pools (for example numbers(1..100)), that will be attached at the root node
+If some element is not specified as a pool, it will be univocally generated
+
+--
+
+Processing steps:
+1. Creation of the Element definition tree:
+First step, the DTD is procesed,
+a tree describing the xml structure is created
+
+2. Generation of pools:
+
+
+Final xml:
+
+--------
+Example 1)
+<Element Library(Book*)>
+<Element Book(Title, Description, Author) has shared Author>
+<Element pool Author(Name, Surname)>
+
+Example 2)
+<Element Organization(SummerCamp[3])>
+<Element SummerCamp(Group[2], Educator[3]) has shared Participants, has shared Educator>
+<Element Group(Name, Participant[4], Educator[SSN]) has distinct Participants>
+<Element pool 15 Participant(Name,Surname)>
+<Element pool 4 Educator(SSN, Name, Surname)>
+
+for each defined pool
+  generate Pools()
+
+take the root node
+  generate (Organization) {
+    create 3 empty summerCamp
+    for sc in SummerCamp
+      generate(sc){
+          take 3 Educator from the pool
+            for e in Educator render(Educator)
+          take 10 Participants from the pool -- TODO: where is the 10 from?
+          create 3 empty groups
+          for gr in groups
+            generate(gr, portion_of_participans ){
+              generate(name)
+              take 4 participants from pool -- that is the portion that is passed to it
+              take an educator from the pool and take its ssn
+              render(educator[ssn])
+              for p in participants
+                render(p)
+            }
+      }
+  }
