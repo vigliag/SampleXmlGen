@@ -9,6 +9,8 @@ If some element is not specified as a pool, it will be univocally generated
 
 --
 
+distinct: children are given distinct sets of elements
+
 Processing steps:
 1. Creation of the Element definition tree:
 First step, the DTD is procesed,

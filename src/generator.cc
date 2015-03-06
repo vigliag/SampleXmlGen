@@ -1,11 +1,14 @@
+#include <string>
+#include <pugixml>
+
 using pugi::xml_node;
 using pugi::xml_document;
 using std::string;
 
-xml_document generateRoot(ElementDefinition root, vector<PoolDefinition> availablePools){
+xml_document* generateRoot(ElementDefinition& root, unsigned int amount, PoolDataMap availablePoolData){
   DataPool dataPool(availablePools);
-  xml_document doc = new xml_document();
-  generate(root, doc, 1, dataPool, "");
+  xml_document* doc = new xml_document();
+  generate(root, doc, amount, dataPool, "");
   return doc;
 }
 
