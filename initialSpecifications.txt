@@ -31,8 +31,8 @@ Example 2)
 <Element Organization(SummerCamp[3])>
 <Element SummerCamp(Group[2], Educator[3]) has shared Participants, has shared Educator>
 <Element Group(Name, Participant[4], Educator[SSN]) has distinct Participants>
-<Element pool 15 Participant(Name,Surname)>
-<Element pool 4 Educator(SSN, Name, Surname)>
+<Element pool[15] Participant(Name,Surname)>
+<Element pool[4] Educator(SSN, Name, Surname)>
 
 for each defined pool
   generate Pools()

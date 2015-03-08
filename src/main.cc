@@ -1,7 +1,9 @@
 #include "structures.hh"
 
 int main(){
-	//1) parse input file and create elementDefinition tree
+	//1) parse input file and obtain an AST
+	//
+	//2) use the AST to create an elementDefinition tree
 	// TODO
 	//
 	
@@ -9,7 +11,7 @@ int main(){
 	vector<PoolDefinition> poolDefinitions;
 	//
 
-	//2) populate data for each pooldefinition
+	//3) populate data for each pooldefinition
 	PoolDataMap availablePoolData;
 	for(PoolDefinition pd : poolDefinitions)
 	{
