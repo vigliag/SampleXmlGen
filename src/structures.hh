@@ -27,7 +27,7 @@ typedef PoolDataMap map<string, PoolDataInfo>;
 struct PoolDataInfo {
   PoolDataInfo(xml_document& _data, bool _exclusive = false){
     data =  _data;
-    exclusive = exclusive; 
+    exclusive = exclusive;
   }
   xml_document* data;
   bool exclusive;

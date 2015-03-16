@@ -1,11 +1,11 @@
 #include "structures.hh"
 
-DataPool:DataPool(PoolDataMap availablePoolData)
-{ 
+DataPool::DataPool(PoolDataMap availablePoolData)
+{
 	PoolDataMap& internalMap = availablePoolData;
 }
 
-DataPool:provideDataPool(vector<NewDataPoolRequest> requests)
+DataPool::provideDataPool(vector<NewDataPoolRequest> requests)
 {
 	PoolDataMap newMap = internalMap; //copy (I hope)
 	for(NewDataPoolRequest r : requests)
@@ -14,7 +14,7 @@ DataPool:provideDataPool(vector<NewDataPoolRequest> requests)
 		//assign new map policy based on request;
 		PoolDataInfo pdi = internalMap[r.resourceId];
 		xml_document* newData = new xml_document();
-		
+
 		for(int i=0; i<r.amount; i++)
 		{
 			xml_node currNode = pdi.data->first_child();
