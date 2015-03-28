@@ -1,0 +1,3 @@
+<!ELEMENT pool[5] Author(Name, Surname)>
+<!ELEMENT root[] Library(Book[3])>
+<!ELEMENT Book(Title, Year, Author[2])>

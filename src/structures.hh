@@ -1,56 +1,71 @@
+/**
+ * Specifies the structures of the abstract tree defining elements hierarchies
+ */
+
+#ifndef STRUCTURES_HH_INCLUDED
+#define STRUCTURES_HH_INCLUDED
+
 #include <string>
-#include <pugixml>
+#include <map>
+#include <vector>
+#include "vendor/pugixml.hpp"
 
 using pugi::xml_node;
 using pugi::xml_document;
 using std::string;
+using std::map;
+using std::vector;
 
-struct PoolDefininition {
-  string resourceId;
-  unsigned int amount;
-  ElementDefinition* ed;
+struct ElementDefinition;
+
+/***
+ * used in generation phase to define the resources that are needed 
+ * to generate the ResourceMap of a new element
+ */
+struct ResourceRequest {
+    string resourceId; //id to lookup the resource in a ResourceMap
+    unsigned amount;
+    bool thePoolForThisResourceShouldBeExclusive;
 };
 
-struct DataPoolQuery {
-  string resourceId;
-  unsigned int amount;
+/**
+ * Specifies the quantity of children to generate as amount
+ * and either an ElementDefinition to use as blueprint to recursively generate 
+ * children or a resourceId to query a resource
+ */
+struct ChildDefinition {
+    ElementDefinition* node;
+    unsigned int amount;
+    /**
+     * identifier of a resource. If not null, take verbatim from resource, else generate
+     */
+    string* resourceId; 
 };
 
-struct NewDataPoolRequest {
-  string elementName;
-  bool exclusiveData;
-  unsigned int amount;
-};
-
-typedef PoolDataMap map<string, PoolDataInfo>;
-
-struct PoolDataInfo {
-  PoolDataInfo(xml_document& _data, bool _exclusive = false){
-    data =  _data;
-    exclusive = exclusive;
-  }
-  xml_document* data;
-  bool exclusive;
-};
-
-class DataPool {
-  public:
-  DataPool(PoolDataMap availablePoolData);
-  DataPool provideDataPool(vector<NewDataPoolRequest>);
-  vector<xml_node> query(DataPoolQuery);
-};
-
-struct OwnChildDefinition {
-  ElementDefinition node;
-  unsigned int amount;
-};
-
+/**
+ * Definition of a node (or element) in the abstract tree describing the structure
+ * An element is made of
+ * a name
+ * a list of of requiredResources (id and amount)
+ * a list of children
+ */
 struct ElementDefinition {
-  string name;
-  bool isLeaf;
-  vector<NewDataPoolRequest> poolRequests; //define how to create own dataPool, used by him and his descendants
-  vector<OwnChildDefinition> ownChildren;
-  vector<DataPoolQuery> childrenFromDataPool; //define how children are created querying the datapool
+    string name;
+    bool isLeaf;
+    vector<ResourceRequest> requiredResources; //define how to create own dataPool, used by him and his descendants
+    vector<ChildDefinition> children;
+    //vector<DataPoolQuery> childrenFromDataPool; //define how children are created querying the datapool
 };
 
+/**
+ * Definition of a Pool of generated xml elements
+ * Acts as root of the tree
+ */
+struct PoolDefinition {
+    string resourceId; //resourceId where to put the new generated pool
+    unsigned int amount;
+    ElementDefinition ed;
+    bool exclusive;
+};
 
+#endif
