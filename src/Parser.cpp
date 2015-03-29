@@ -8,8 +8,10 @@ using namespace std;
 namespace parsing {
 
     typedef pair<string, unsigned> id_amount;
-    typedef pair<string, bool> id_exclusive;
+    //typedef pair<string, bool> id_exclusive;
 
+    struct id_amount_exclusive {string id; unsigned amount; bool exclusive;};
+    
     inline void printMatches(sregex_iterator& it) {
         cout << "Matches for " << it->str() << endl;
         for (unsigned i = 0; i < it->size(); i++) {
@@ -30,7 +32,7 @@ namespace parsing {
         unsigned quantifier;
         string name;
         vector<id_amount> children;
-        vector<id_exclusive> resourceRequests;
+        vector<id_amount_exclusive> resourceRequests;
         
         friend std::ostream& operator<<(std::ostream& os, const ElementDefinitionSTM& obj) {
             os << "Name: " << obj.name << endl;
@@ -44,7 +46,7 @@ namespace parsing {
             os << "]" << endl;
             os << "ResourceRequests: [" ;
             for (auto a : obj.resourceRequests) {
-                os << a.first <<"->" << a.second << " ";
+                os << a.id <<"-" << a.exclusive << "-" << a.amount << " ";
             }
             os << "]" << endl;
             return os;
@@ -59,7 +61,7 @@ namespace parsing {
      * @return a vector of pair<string, unsigned>
      */
     vector<id_amount> parseChildren(const string& in) {
-        regex childrenRegex(R"((\w+)(\[(\d+)\])?)");
+        regex childrenRegex(R"((\w+)\s?(\[(\d+)\])?)");
         sregex_iterator it(in.begin(), in.end(), childrenRegex);
         sregex_iterator reg_end;
         vector<id_amount> result;
@@ -79,17 +81,18 @@ namespace parsing {
      * @return a vector of pairs <string, bool>
      *  where the boolean is one if distinct is specified
      */
-    vector<id_exclusive> parseResourcesList(const string& s) {
-        regex resourceListRegex(R"(has\s+(shared|distinct)\s+(\w+))");
+    vector<id_amount_exclusive> parseResourcesList(const string& s) {
+        regex resourceListRegex(R"((shared|distinct)\s+(\w+)\[(\d+)\])");
         sregex_iterator it(s.begin(), s.end(), resourceListRegex);
         sregex_iterator reg_end;
 
-        vector<id_exclusive> result;
+        vector<id_amount_exclusive> result;
         
         for (; it != reg_end; ++it) {
-            bool exclusive = (it->str(1) == "exclusive");
+            bool exclusive = (it->str(1) == "distinct");
             string id = it->str(2);
-            result.push_back(id_exclusive(id, exclusive));
+            unsigned quantifier = parseQuantifier(it->str(3));
+            result.push_back(id_amount_exclusive{id, quantifier, exclusive});
         }
         return result;
     }
@@ -100,7 +103,7 @@ namespace parsing {
      * @return a vector of ElementDefinitionSTM
      */
     vector<ElementDefinitionSTM> parseElementDefinitionList(const string& s) {
-        regex mainregex(R"(<!ELEMENT\s+((\w*)\[(\d*)\])?\s*(\w+)\((.*)\)\s*((has\s+(shared|distinct)\s+\w+,?\s*)*)\s*>)");
+        regex mainregex(R"(<\S*\s+((\w*)\[(\d*)\])?\s*(\w+)\s*\((.*)\)\s*(has\s+(.*))?\s*>)");
         sregex_iterator it(s.begin(), s.end(), mainregex);
         sregex_iterator reg_end;
 
@@ -117,7 +120,7 @@ namespace parsing {
             edstm.quantifier = parseQuantifier(it->str(3));
             edstm.name = it->str(4);
             edstm.children = parseChildren(it->str(5));
-            edstm.resourceRequests = parseResourcesList(it->str(6));
+            edstm.resourceRequests = parseResourcesList(it->str(7));
 
             //print parse result
             cout << edstm << endl;
@@ -160,11 +163,11 @@ namespace parsing {
                 result.node->isLeaf = false;
                 result.node->name = child.first;
                 
-                for (id_exclusive rr : ed->resourceRequests) {
+                for (id_amount_exclusive rr : ed->resourceRequests) {
                     ResourceRequest nrr;
-                    nrr.resourceId = rr.first;
-                    nrr.thePoolForThisResourceShouldBeExclusive = rr.second;
-                    nrr.amount = 2; //TODO FIXME
+                    nrr.resourceId = rr.id;
+                    nrr.thePoolForThisResourceShouldBeExclusive = rr.exclusive;
+                    nrr.amount = rr.amount;
                     result.node->requiredResources.push_back(nrr);
                 }
 

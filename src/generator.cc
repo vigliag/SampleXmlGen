@@ -1,6 +1,6 @@
 #include "generator.hh"
 #include <sstream>
-
+#include <set>
 /**
  * Generates a certain amount of xml elements inside a given parent node.
  * Each element is generated as specified in the ElementDefinition.
@@ -25,12 +25,21 @@ void generate(ElementDefinition& en,
         const string prefix) {
 
     //Generate own resourceMap
-    ResourceMap ownDataPool = ResourceMap(parentResources); //COPY
+    ResourceMap ownDataPool;
+    
+    std::set<string> processedResources; 
+    //Apply modifications to the map as specified in the resourceRequests
     for (ResourceRequest rr : en.requiredResources) {
-        ownDataPool[rr.resourceId] = parentResources[rr.resourceId].getSubset(rr.amount);
+        ownDataPool[rr.resourceId] = parentResources.at(rr.resourceId).getSubset(rr.amount, true);
         ownDataPool[rr.resourceId].exclusive = rr.thePoolForThisResourceShouldBeExclusive;
+        processedResources.insert(rr.resourceId); //"mark" as processed
     }
-
+    //Simply take all elements for all other pools
+    for(auto& m : parentResources){
+        bool alreadyProcessed = (processedResources.count(m.first) == 1);
+        if (!alreadyProcessed)
+            ownDataPool[m.first] = m.second.getSubset(numeric_limits<int>::max(), false);
+    }
     
     cout << "Generating " << amount << " elements of " << en.name << endl;
     
@@ -61,18 +70,11 @@ void generate(ElementDefinition& en,
                 Resource res = ownDataPool[resId];
                 pugi::xml_document* data = res.data;
                 
-                cout << "Copying children from resource " << res.name << endl;
-                
+                cout << "Copying "<< child.amount << " children from resource " << res.name << endl;
+                res.data->save(std::cout); //TODO REMOVEME
                 //TODO: randomize here
-                int i = 0;
-                for (pugi::xml_node res_elem = data->first_child();
-                        res_elem;
-                        res_elem = res_elem.next_sibling()){
-                    if(i>=amount) break;
-                    currentNode.append_copy(res_elem);
-                    i++;
-                }
-                    
+                
+                takeNodes(data, &currentNode, child.amount, res.exclusive);
             
             //if a resourceId isn't specified, generate recursively
             } else { //node must be set

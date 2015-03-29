@@ -54,6 +54,7 @@ int main(int argc, char** argv) {
         cout << "Generating pool for: " << pd.resourceId << endl;
         generatedResources[pd.resourceId] =
                 Resource(pd.resourceId, generateRoot(pd.ed, pd.amount, generatedResources), pd.exclusive);
+        //generatedResources[pd.resourceId].data->save(std::cout); //TODO REMOVEME
     }
 
     //generate root element

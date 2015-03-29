@@ -1,3 +1,5 @@
-<!ELEMENT pool[5] Author(Name, Surname)>
-<!ELEMENT root[] Library(Book[3])>
-<!ELEMENT Book(Title, Year, Author[2])>
+<!ELEMENT root[] Organization ( SummerCamp[4] )>
+<!ELEMENT SummerCamp ( Name, Educator[3], Group[2], City, Region, StartDate, EndDate ) has shared Child[22]>
+<!ELEMENT pool[5] Educator ( SSN, Name, Surname, YearOfBirth )>
+<!ELEMENT Group ( Name, SSNEducator, Child[6] ) has distinct Child[17]> //a group is unique for each SummerCamp (its parent), no need to specify anything
+<!ELEMENT pool[60] Child ( SSN, Name, Surname, YearOfBirth )> //Child elements are shared between SummerCamps. Set Child as pool, and then require them at SummerCamp level

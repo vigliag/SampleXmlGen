@@ -3,6 +3,23 @@
 
 #include "structures.hh"
 
+void takeNodes(xml_node* src, xml_node* dest, int amount, bool move) {
+    int i = 0;
+    xml_node curr = src->first_child();
+    while (curr && i < amount) {
+        dest->append_copy(curr);
+        //xml_node tmp = res_elem;
+
+        xml_node tmp = curr;
+        curr = curr.next_sibling();
+        i++;
+
+        if (move) {
+            src->remove_child(tmp);
+        }
+    }
+}
+
 /**
  * A collection of pregenerated xml_nodes used in generation phase
  * 
@@ -13,34 +30,36 @@
  */
 class Resource {
 public:
-    Resource(): name("unnamed"), data(NULL)  {
+
+    Resource() : name("unnamed"), data(NULL) {
     }
 
-    
     Resource(const Resource& other) :
     name(other.name), data(other.data), exclusive(other.exclusive) {
+      //  data = new xml_document(); LOGIC MOVED OUTSIDE
+      //  data->reset(*other.data);
     }
     
-    Resource(string _name ) : name(_name){
+    ~Resource(){
+        delete data;
+    }
+
+    Resource(string _name) : name(_name) {
         data = new xml_document();
     };
-    
+
     Resource(string _name, xml_document* _data, bool _exclusive = false)
     : name(_name), data(_data), exclusive(_exclusive) {
     };
+
     
-    Resource getSubset(int amount){
+    
+    Resource getSubset(int amount, bool applyExclusive) {
         xml_document* newData = new xml_document();
-        for (unsigned i = 0; i < amount; i++) {
-            xml_node currNode = data->first_child();
-            if (!currNode) throw "Not enough elements in resource " + name;
-            newData->append_copy(currNode);
-            if (exclusive)
-                data->remove_child(currNode);
-        }
+        takeNodes(data, newData, amount, exclusive && applyExclusive );
         return Resource(name, newData);
     };
-    
+
     string name;
     xml_document* data;
     bool exclusive;
