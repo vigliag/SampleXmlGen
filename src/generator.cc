@@ -2,10 +2,21 @@
 #include <sstream>
 
 /**
- * Generates a list of xml elements inside a given parent node
- * uses the information of the given ElementDefinition as blueprint
- * calls itself recursively.
- *
+ * Generates a certain amount of xml elements inside a given parent node.
+ * Each element is generated as specified in the ElementDefinition.
+ * 
+ * A ResourceMap is used to generate children that are marked (in the ChildDefinition)
+ * as taken verbatim from a Resource.
+ * The ResourceMap is modified (a new version is created) according to indications
+ * in ElementDefinition and passed down to the children (see method getSubset of Resource).
+ * 
+ * The function calls itself recursively for each of the children nodes it generates
+ * (so for each of the children of each of genenrated nodes)
+ * 
+ * @param en The element to use as blueprint
+ * @param parentNode The xml_node where the generated nodes will be appended
+ * @param parentResources The map indicating all resources avaiable to generate children
+ * @param prefix A string that will be used to univocally generate content for the leaf nodes
  */
 void generate(ElementDefinition& en,
         xml_node* parentNode,
@@ -20,8 +31,10 @@ void generate(ElementDefinition& en,
         ownDataPool[rr.resourceId].exclusive = rr.thePoolForThisResourceShouldBeExclusive;
     }
 
-    //Generate each element
+    
     cout << "Generating " << amount << " elements of " << en.name << endl;
+    
+    //Loop Generating each element
     for (unsigned i = 0; i < amount; i++) {
 
         //obtain new prefix (will be used to name leaves)
@@ -40,13 +53,15 @@ void generate(ElementDefinition& en,
 
         //if it is not a leaf, for each children
         for (ChildDefinition child : en.children) {
-            cout << "generating children " << child.resourceId << endl;
+            
+            
             //if children is to be taken from a resource, copy verbatim from there
             if (child.resourceId != NULL) {
                 string resId = *(child.resourceId);
                 Resource res = ownDataPool[resId];
                 pugi::xml_document* data = res.data;
                 
+                cout << "Copying children from resource " << res.name << endl;
                 
                 //TODO: randomize here
                 int i = 0;
@@ -61,7 +76,8 @@ void generate(ElementDefinition& en,
             
             //if a resourceId isn't specified, generate recursively
             } else { //node must be set
-                //WARNING
+                //WARNING passing address of currentNode, which is in stack
+                //cout << "generating Element " << child.node->name << end;
                 generate(*(child.node), &currentNode, child.amount, ownDataPool, childrenPrefix);
             }
         }

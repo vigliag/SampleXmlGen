@@ -21,9 +21,6 @@ void printTree(ElementDefinition& ed){
     }
 }
 
-/*
- * 
- */
 int main(int argc, char** argv) {
     istream *in;
     if(argc > 1){
@@ -40,7 +37,13 @@ int main(int argc, char** argv) {
     
     //2) use the AST to create an elementDefinition tree
     parsing::ParsingResults parsedTree = parsing::parse(inputString);
-    printTree(*parsedTree.rootDefinition);
+    
+    if(parsedTree.rootDefinition == NULL){
+        cout << "Couldn't find any root element, aborting";
+        return -1;
+    }
+    
+    //printTree(*parsedTree.rootDefinition);
     //3) Generation phase
     cout << "Entering Generation phase" << endl;
     
