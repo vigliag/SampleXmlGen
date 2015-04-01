@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=Cygwin_4.x-Windows
 CND_ARTIFACT_DIR_Debug=dist/Debug/Cygwin_4.x-Windows
-CND_ARTIFACT_NAME_Debug=xmlsample
-CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin_4.x-Windows/xmlsample
+CND_ARTIFACT_NAME_Debug=samplexmlgen
+CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin_4.x-Windows/samplexmlgen
 CND_PACKAGE_DIR_Debug=dist/Debug/Cygwin_4.x-Windows/package
-CND_PACKAGE_NAME_Debug=xmlsample.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin_4.x-Windows/package/xmlsample.tar
+CND_PACKAGE_NAME_Debug=samplexmlgen.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin_4.x-Windows/package/samplexmlgen.tar
 # Release configuration
-CND_PLATFORM_Release=CLang-Windows
-CND_ARTIFACT_DIR_Release=dist/Release/CLang-Windows
-CND_ARTIFACT_NAME_Release=xmlsample
-CND_ARTIFACT_PATH_Release=dist/Release/CLang-Windows/xmlsample
-CND_PACKAGE_DIR_Release=dist/Release/CLang-Windows/package
-CND_PACKAGE_NAME_Release=xmlsample.tar
-CND_PACKAGE_PATH_Release=dist/Release/CLang-Windows/package/xmlsample.tar
+CND_PLATFORM_Release=Cygwin_4.x-Windows
+CND_ARTIFACT_DIR_Release=dist/Release/Cygwin_4.x-Windows
+CND_ARTIFACT_NAME_Release=samplexmlgen
+CND_ARTIFACT_PATH_Release=dist/Release/Cygwin_4.x-Windows/samplexmlgen
+CND_PACKAGE_DIR_Release=dist/Release/Cygwin_4.x-Windows/package
+CND_PACKAGE_NAME_Release=samplexmlgen.tar
+CND_PACKAGE_PATH_Release=dist/Release/Cygwin_4.x-Windows/package/samplexmlgen.tar
 #
 # include compiler specific variables
 #

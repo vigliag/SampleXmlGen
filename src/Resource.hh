@@ -3,23 +3,7 @@
 
 #include "structures.hh"
 
-void takeNodes(xml_node* src, xml_node* dest, int amount, bool move) {
-    int i = 0;
-    xml_node curr = src->first_child();
-    while (curr && i < amount) {
-        dest->append_copy(curr);
-        //xml_node tmp = res_elem;
-
-        xml_node tmp = curr;
-        curr = curr.next_sibling();
-        i++;
-
-        if (move) {
-            src->remove_child(tmp);
-        }
-    }
-}
-
+void takeNodes(xml_node* src, xml_node* dest, int amount, bool move);
 /**
  * A collection of pregenerated xml_nodes used in generation phase
  * 
@@ -41,7 +25,8 @@ public:
     }
     
     ~Resource(){
-        delete data;
+        //if(data!=NULL)
+        //    delete data; TODOTODOTODO FIXMEE
     }
 
     Resource(string _name) : name(_name) {

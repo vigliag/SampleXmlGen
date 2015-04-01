@@ -37,8 +37,10 @@ void generate(ElementDefinition& en,
     //Simply take all elements for all other pools
     for(auto& m : parentResources){
         bool alreadyProcessed = (processedResources.count(m.first) == 1);
-        if (!alreadyProcessed)
-            ownDataPool[m.first] = m.second.getSubset(numeric_limits<int>::max(), false);
+        if (!alreadyProcessed){
+            Resource newRes = m.second.getSubset(numeric_limits<int>::max(), false) ;
+            ownDataPool.insert(std::make_pair(m.first, newRes ));
+        }
     }
     
     cout << "Generating " << amount << " elements of " << en.name << endl;
@@ -67,7 +69,7 @@ void generate(ElementDefinition& en,
             //if children is to be taken from a resource, copy verbatim from there
             if (child.resourceId != NULL) {
                 string resId = *(child.resourceId);
-                Resource res = ownDataPool[resId];
+                Resource res = ownDataPool.at(resId);
                 pugi::xml_document* data = res.data;
                 
                 cout << "Copying "<< child.amount << " children from resource " << res.name << endl;
