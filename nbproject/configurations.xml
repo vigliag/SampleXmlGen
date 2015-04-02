@@ -28,7 +28,7 @@
     </logicalFolder>
     <logicalFolder name="XMLSample" displayName="XMLSample" projectFiles="true">
       <itemPath>Makefile</itemPath>
-      <itemPath>README</itemPath>
+      <itemPath>README.md</itemPath>
       <itemPath>initialSpecifications.txt</itemPath>
       <itemPath>testdata.txt</itemPath>
     </logicalFolder>
@@ -63,7 +63,7 @@
       </compileType>
       <item path="Makefile" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="README" ex="false" tool="3" flavor2="0">
+      <item path="README.md" ex="false" tool="3" flavor2="0">
       </item>
       <item path="initialSpecifications.txt" ex="false" tool="3" flavor2="0">
       </item>
@@ -114,7 +114,7 @@
       </compileType>
       <item path="Makefile" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="README" ex="false" tool="3" flavor2="0">
+      <item path="README.md" ex="false" tool="3" flavor2="0">
       </item>
       <item path="initialSpecifications.txt" ex="false" tool="3" flavor2="0">
       </item>
