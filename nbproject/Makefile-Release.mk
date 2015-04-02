@@ -76,15 +76,15 @@ ${OBJECTDIR}/src/Parser.o: src/Parser.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Parser.o src/Parser.cpp
 
-${OBJECTDIR}/src/Resource.o: src/Resource.cc 
+${OBJECTDIR}/src/Resource.o: src/Resource.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Resource.o src/Resource.cc
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Resource.o src/Resource.cpp
 
-${OBJECTDIR}/src/generator.o: src/generator.cc 
+${OBJECTDIR}/src/generator.o: src/generator.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/generator.o src/generator.cc
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/generator.o src/generator.cpp
 
 ${OBJECTDIR}/src/vendor/pugixml.o: src/vendor/pugixml.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/vendor

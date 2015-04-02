@@ -1,7 +1,7 @@
 #ifndef RESOURCE_HH_INCLUDED
 #define RESOURCE_HH_INCLUDED
 
-#include "structures.hh"
+#include "structures.hpp"
 
 void takeNodes(xml_node* src, xml_node* dest, int amount, bool move);
 /**

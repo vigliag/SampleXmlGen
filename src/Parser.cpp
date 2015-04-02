@@ -1,5 +1,5 @@
-#include "parsingstructures.hh"
-#include "structures.hh"
+#include "parsingstructures.hpp"
+#include "structures.hpp"
 #include <cstdlib>
 #include <iostream>
 #include <string>

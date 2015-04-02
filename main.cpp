@@ -4,8 +4,8 @@
  *
  * Created on 27 marzo 2015, 16.58
  */
-#include "src/structures.hh"
-#include "src/generator.hh"
+#include "src/structures.hpp"
+#include "src/generator.hpp"
 #include <cstdlib>
 #include <iostream>
 #include <fstream>

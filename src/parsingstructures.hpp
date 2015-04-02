@@ -1,7 +1,7 @@
 #ifndef PARSINGSTRUCTURES_HH_INCLUDED
 #define PARSINGSTRUCTURES_HH_INCLUDED
 
-#include "structures.hh"
+#include "structures.hpp"
 #include <iostream>
 #include <string>
 #include <iterator>

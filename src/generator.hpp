@@ -3,8 +3,8 @@
 
 #include <string>
 #include "vendor/pugixml.hpp"
-#include "parsingstructures.hh"
-#include "Resource.hh"
+#include "parsingstructures.hpp"
+#include "Resource.hpp"
 
 using pugi::xml_node;
 using pugi::xml_document;

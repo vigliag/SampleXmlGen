@@ -4,6 +4,10 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>src/Resource.hpp</itemPath>
+      <itemPath>src/generator.hpp</itemPath>
+      <itemPath>src/parsingstructures.hpp</itemPath>
+      <itemPath>src/structures.hpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -18,13 +22,9 @@
         <itemPath>src/vendor/pugixml.hpp</itemPath>
       </logicalFolder>
       <itemPath>src/Parser.cpp</itemPath>
-      <itemPath>src/Resource.cc</itemPath>
-      <itemPath>src/Resource.hh</itemPath>
-      <itemPath>src/generator.cc</itemPath>
-      <itemPath>src/generator.hh</itemPath>
+      <itemPath>src/Resource.cpp</itemPath>
+      <itemPath>src/generator.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
-      <itemPath>src/parsingstructures.hh</itemPath>
-      <itemPath>src/structures.hh</itemPath>
     </logicalFolder>
     <logicalFolder name="XMLSample" displayName="XMLSample" projectFiles="true">
       <itemPath>Makefile</itemPath>
@@ -43,6 +43,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>EmscriptenMakefile</itemPath>
   </logicalFolder>
   <sourceRootList>
     <Elem>.</Elem>
@@ -61,6 +62,8 @@
           <commandlineTool>g++</commandlineTool>
         </ccTool>
       </compileType>
+      <item path="EmscriptenMakefile" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Makefile" ex="false" tool="3" flavor2="0">
       </item>
       <item path="README.md" ex="false" tool="3" flavor2="0">
@@ -71,17 +74,17 @@
       </item>
       <item path="src/Parser.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/Resource.cc" ex="false" tool="1" flavor2="0">
+      <item path="src/Resource.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/Resource.hh" ex="false" tool="3" flavor2="0">
+      <item path="src/Resource.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/generator.cc" ex="false" tool="1" flavor2="0">
+      <item path="src/generator.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/generator.hh" ex="false" tool="3" flavor2="0">
+      <item path="src/generator.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/parsingstructures.hh" ex="false" tool="3" flavor2="0">
+      <item path="src/parsingstructures.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/structures.hh" ex="false" tool="3" flavor2="0">
+      <item path="src/structures.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/vendor/pugiconfig.hpp" ex="false" tool="3" flavor2="0">
       </item>
@@ -112,6 +115,8 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="EmscriptenMakefile" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Makefile" ex="false" tool="3" flavor2="0">
       </item>
       <item path="README.md" ex="false" tool="3" flavor2="0">
@@ -122,17 +127,17 @@
       </item>
       <item path="src/Parser.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/Resource.cc" ex="false" tool="1" flavor2="0">
+      <item path="src/Resource.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/Resource.hh" ex="false" tool="3" flavor2="0">
+      <item path="src/Resource.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/generator.cc" ex="false" tool="1" flavor2="0">
+      <item path="src/generator.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/generator.hh" ex="false" tool="3" flavor2="0">
+      <item path="src/generator.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/parsingstructures.hh" ex="false" tool="3" flavor2="0">
+      <item path="src/parsingstructures.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/structures.hh" ex="false" tool="3" flavor2="0">
+      <item path="src/structures.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/vendor/pugiconfig.hpp" ex="false" tool="3" flavor2="0">
       </item>
