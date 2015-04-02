@@ -8,14 +8,13 @@ using namespace std;
 namespace parsing {
 
     typedef pair<string, unsigned> id_amount;
-    //typedef pair<string, bool> id_exclusive;
 
     struct id_amount_exclusive {string id; unsigned amount; bool exclusive;};
     
     inline void printMatches(sregex_iterator& it) {
-        cout << "Matches for " << it->str() << endl;
+        cerr << "Matches for " << it->str() << endl;
         for (unsigned i = 0; i < it->size(); i++) {
-            cout << i << "  " << it->str(i) << endl;
+            cerr << i << "  " << it->str(i) << endl;
         }
     }
 
@@ -123,7 +122,7 @@ namespace parsing {
             edstm.resourceRequests = parseResourcesList(it->str(7));
 
             //print parse result
-            cout << edstm << endl;
+            cerr << edstm << endl;
 
             result.push_back(edstm);
         }
@@ -200,11 +199,11 @@ namespace parsing {
             }
         }
 
-        cout << "Obtained Element Map:" << endl;
+        cerr << "Obtained Element Map:" << endl;
         for (auto e : elemap) {
-            cout << e.first << " = " << e.second << endl;
+            cerr << e.first << " = " << e.second << endl;
         }
-        cout << endl;
+        cerr << endl;
 
         //second stage: turn children into reference to elements
         //process each pool first

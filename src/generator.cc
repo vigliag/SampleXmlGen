@@ -43,7 +43,7 @@ void generate(ElementDefinition& en,
         }
     }
     
-    cout << "Generating " << amount << " elements of " << en.name << endl;
+    cerr << "Generating " << amount << " elements of " << en.name << endl;
     
     //Loop Generating each element
     for (unsigned i = 0; i < amount; i++) {
@@ -72,8 +72,8 @@ void generate(ElementDefinition& en,
                 Resource res = ownDataPool.at(resId);
                 pugi::xml_document* data = res.data;
                 
-                cout << "Copying "<< child.amount << " children from resource " << res.name << endl;
-                res.data->save(std::cout); //TODO REMOVEME
+                cerr << "Copying "<< child.amount << " children from resource " << res.name << endl;
+                res.data->save(std::cerr); //TODO REMOVEME
                 //TODO: randomize here
                 
                 takeNodes(data, &currentNode, child.amount, res.exclusive);
@@ -81,7 +81,7 @@ void generate(ElementDefinition& en,
             //if a resourceId isn't specified, generate recursively
             } else { //node must be set
                 //WARNING passing address of currentNode, which is in stack
-                //cout << "generating Element " << child.node->name << end;
+                //cerr << "generating Element " << child.node->name << end;
                 generate(*(child.node), &currentNode, child.amount, ownDataPool, childrenPrefix);
             }
         }
@@ -91,7 +91,7 @@ void generate(ElementDefinition& en,
 xml_document* generateRoot(ElementDefinition& root,
         unsigned int amount,
         ResourceMap& previouslyGeneratedResources) {
-    cout << "Generating root node " << root.name << endl;
+    cerr << "Generating root node " << root.name << endl;
     xml_document* doc = new xml_document();
     //xml_node root_node = doc->append_child(root.name.c_str());
     

@@ -12,19 +12,35 @@
 using namespace std;
 
 
-//TODO write a printMetaModel function
-void printTree(ElementDefinition& ed) {
-    cout << "Element: " << ed.name <<  endl;
+/**
+ * Debug function that prints the definition tree
+ * @param ed
+ */
+void printDefinitionTree(ElementDefinition& ed) {
+    cerr << "Element: " << ed.name <<  endl;
     if (ed.isLeaf) {
-        cout << "leaf" << endl;
+        cerr << "leaf" << endl;
     } else {
-        cout << "children: {" << endl;
+        cerr << "children: {" << endl;
         for (ChildDefinition cd : ed.children) {
-            cout << "node address: " << cd.node << ", resourceid: " << cd.resourceId << endl;
-            if (cd.node != NULL) printTree(*cd.node);
+            cerr << "node address: " << cd.node << ", resourceid: " << cd.resourceId << endl;
+            if (cd.node != NULL) printDefinitionTree(*cd.node);
         }
-        cout << "}" << endl;
+        cerr << "}" << endl;
     }
+}
+
+xml_document* generateResult(vector<PoolDefinition>* poolDefinitions, ElementDefinition* rootDefinition){
+    ResourceMap generatedResources;
+    for (PoolDefinition pd : *poolDefinitions) {
+        cerr << "Generating pool for: " << pd.resourceId << endl;
+        Resource newres(pd.resourceId, generateRoot(pd.ed, pd.amount, generatedResources), pd.exclusive);
+        generatedResources[pd.resourceId] = newres;
+        newres.data->save(std::cerr);
+    }
+
+    cerr << "#### Generate actual root node" << endl;
+    return generateRoot(*rootDefinition, 1, generatedResources);
 }
 
 int main(int argc, char** argv) {
@@ -32,43 +48,25 @@ int main(int argc, char** argv) {
     if (argc > 1) {
         in = new ifstream(argv[1], std::ios::in | std::ios::binary);
     } else {
-        in = &std::cin;
+        in = &cin;
     }
-    //1) parse input file and obtain an AST
-    auto beginCIN = std::istreambuf_iterator<char>(*in);
-    auto endCIN = std::istreambuf_iterator<char>();
-    std::string inputString(beginCIN, endCIN);
+    
+    auto beginCIN = istreambuf_iterator<char>(*in);
+    auto endCIN = istreambuf_iterator<char>();
+    string inputString(beginCIN, endCIN);
     //delete in?
-
-
+    
     //2) use the AST to create an elementDefinition tree
     parsing::ParsingResults parsedTree = parsing::parse(inputString);
 
     if (parsedTree.rootDefinition == NULL) {
-        cout << "Couldn't find any root element, aborting";
+        cerr << "Couldn't find any root element, aborting" << endl;
         return -1;
     }
-
-    printTree(*parsedTree.rootDefinition);
-    //3) Generation phase
-    cout << "Entering Generation phase" << endl;
-
-    //generate each pool
-
-    ResourceMap generatedResources;
-    for (PoolDefinition pd : *(parsedTree.poolDefinitions)) {
-        cout << "Generating pool for: " << pd.resourceId << endl;
-        //TODO DEBUG HERE. IS LHS EVALUATED BEFORE RHS?
-        Resource newres(pd.resourceId, generateRoot(pd.ed, pd.amount, generatedResources), pd.exclusive);
-        generatedResources[pd.resourceId] = newres;
-        //generatedResources[pd.resourceId].data->save(std::cout); //TODO REMOVEME
-    }
-
-    //generate root element
-    cout << "#### Generate actual root node" << endl;
-    xml_document* result = generateRoot(*(parsedTree.rootDefinition), 1, generatedResources);
-
-    //output result
-    result->save(std::cout);
+    printDefinitionTree(*parsedTree.rootDefinition);
+    
+    cerr << "Entering Generation phase" << endl;
+    xml_document* result = generateResult(parsedTree.poolDefinitions, parsedTree.rootDefinition);
+    result->save(cout);
     return 0;
 }
