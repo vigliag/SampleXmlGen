@@ -23,8 +23,9 @@
       </logicalFolder>
       <itemPath>src/Parser.cpp</itemPath>
       <itemPath>src/Resource.cpp</itemPath>
+      <itemPath>cexport.cpp</itemPath>
+      <itemPath>commandline.cpp</itemPath>
       <itemPath>src/generator.cpp</itemPath>
-      <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="XMLSample" displayName="XMLSample" projectFiles="true">
       <itemPath>Makefile</itemPath>
@@ -68,9 +69,11 @@
       </item>
       <item path="README.md" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="initialSpecifications.txt" ex="false" tool="3" flavor2="0">
+      <item path="cexport.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      <item path="commandline.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="initialSpecifications.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Parser.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -121,9 +124,11 @@
       </item>
       <item path="README.md" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="initialSpecifications.txt" ex="false" tool="3" flavor2="0">
+      <item path="cexport.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      <item path="commandline.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="initialSpecifications.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Parser.cpp" ex="false" tool="1" flavor2="0">
       </item>

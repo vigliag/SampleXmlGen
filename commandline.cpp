@@ -30,19 +30,6 @@ void printDefinitionTree(ElementDefinition& ed) {
     }
 }
 
-xml_document* generateResult(vector<PoolDefinition>* poolDefinitions, ElementDefinition* rootDefinition){
-    ResourceMap generatedResources;
-    for (PoolDefinition pd : *poolDefinitions) {
-        cerr << "Generating pool for: " << pd.resourceId << endl;
-        Resource newres(pd.resourceId, generateRoot(pd.ed, pd.amount, generatedResources), pd.exclusive);
-        generatedResources[pd.resourceId] = newres;
-        newres.data->save(std::cerr);
-    }
-
-    cerr << "#### Generate actual root node" << endl;
-    return generateRoot(*rootDefinition, 1, generatedResources);
-}
-
 int main(int argc, char** argv) {
     istream *in;
     if (argc > 1) {

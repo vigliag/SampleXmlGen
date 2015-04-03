@@ -1,14 +1,17 @@
-src = $(wildcard src/*.cpp) $(wildcard src/vendor/*.cpp) main.cpp
+src = $(wildcard src/*.cpp) $(wildcard src/vendor/*.cpp) cexport.cpp
 obj = $(src:.cpp=.o)
 
 CXX = em++
 CXXFLAGS = -std=c++11 -O2
 LDFLAGS = 
 
-all: samplexmlgen.bc
+all: samplexmlgen.js
 
 samplexmlgen.js: samplexmlgen.bc
-	em++ -std=c++11 -O2 samplexmlgen.bc -o samplexmlgen.js
+	$(CXX) $(CXXFLAGS) samplexmlgen.bc -o samplexmlgen.js -s EXPORTED_FUNCTIONS="['_samplexmlgen']"
+
+samplexmlgen.html: samplexmlgen.bc
+	$(CXX) $(CXXFLAGS) samplexmlgen.bc -o samplexmlgen.html -s EXPORTED_FUNCTIONS="['_samplexmlgen']"
 
 samplexmlgen.bc: $(obj)
 	$(CXX) -o $@ $^ $(LDFLAGS)
