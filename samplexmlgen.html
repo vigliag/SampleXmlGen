@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>SampleXMLGen Demo</title>
+    <style>
+    	#container {max-width: 920px; margin:0 auto;}
+    	textarea {width:90%;}
+    	.CodeMirror { border: 1px solid #ddd;}
+    </style>
+    <script src="codemirror.js"></script>
+	<link rel="stylesheet" href="codemirror.css">
+	<script src="mode/xml/xml.js"></script>
+	<script src="mode/dtd/dtd.js"></script>
+  </head>
+  <body>
+  	<div id="container">
+	  	<h1>SampleXMLGen Demo</h1>
+	  	<p>Emscripten-based demo page for the SampleXMLGen toy project. For details refer to the readme in <a href="https://github.com/vigliag/SampleXmlGen">the github page</a></p>
+	    <h3>Input</h3>
+		<textarea id="input" rows="20"></textarea>
+		<button id="generate">Generate</button>
+	    <h3>Output</h3>
+	    <textarea id="output" rows="20"></textarea>
+    </div>
+    <script type='text/javascript'>
+      var output = document.getElementById("output");
+      var input = document.getElementById("input");
+
+      var initialInput = "<!Element root[] Library(Book[2])>\n" + 
+      	"<!Element Book(Title, Description, Author[2])>\n" +
+		"<!Element pool[10] Author(Name, Surname)>";
+
+      var inputMirror = CodeMirror.fromTextArea(input, {
+	    lineNumbers: true,
+	    mode: "dtd"
+	  });
+
+	  inputMirror.setValue(initialInput);
+
+	  var outputMirror = CodeMirror.fromTextArea(output, {
+	    lineNumbers: true,
+	    mode: "xml"
+	  });
+
+      var Module = {
+        printErr: function(text) {}
+      };
+
+      document.getElementById("generate")
+      	.addEventListener("click", function(e){
+      		var inputstring = inputMirror.getValue();
+      		var result = Module.ccall('samplexmlgen', 'string', ['string'], [inputMirror.getValue()]);
+      		outputMirror.setValue(result);
+      	});
+
+    </script>
+    <script type="text/javascript" src="samplexmlgen.js"></script>
+  </body>
+</html>
